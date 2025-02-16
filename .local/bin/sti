@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+STM32_BIN="/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin/STM32_Programmer_CLI"
+
+# Check if the binary exists
+if [ ! -x "$STM32_BIN" ]; then
+  echo "Error: STM32Cube not found or not executable at $STM32_BIN"
+  exit 1
+fi
+
+# Check if the required file path is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <path_to_hex_file>"
+  exit 1
+fi
+
+# Execute the STM32CubeProgrammer CLI with the given file
+"$STM32_BIN" -c port=SWD -d "$1" -v -rst

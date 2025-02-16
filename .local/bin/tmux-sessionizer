@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+dirs="$HOME/Projects/ $HOME/Repos/ $HOME/.config/ $HOME/.local/ $HOME/Personal $HOME/Personal/learn/"
+
+# Select directory using argument or fzf if no argument provided
+if [ $# -eq 1 ]; then
+  selected="$1"
+else
+  selected=$(find $dirs -mindepth 1 -maxdepth 1 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \) | fzf)
+fi
+
+# Exit if no directory is selected
+[ -z "$selected" ] && exit 0
+
+# Replace dots with underscores in the selected directory name
+selected_name="$(basename "$selected" | tr . _)"
+
+# Check if tmux is running
+tmux_running="$(pgrep tmux)"
+
+# If no TMUX session is running, start a new session and attach
+if [ -z "$TMUX" ] && [ -z "$tmux_running" ]; then
+    tmux new-session -s "$selected_name" -c "$selected"
+    exit 0
+fi
+
+# If the session doesn't exist, create a new session
+if ! tmux has-session -t "$selected_name" 2> /dev/null; then
+    tmux new-session -ds "$selected_name" -c "$selected"
+fi
+
+# Attach to the session or switch clients if already in tmux
+if [ -z "$TMUX" ]; then
+    tmux attach-session -t "$selected_name"
+else
+    tmux switch-client -t "$selected_name"
+fi
