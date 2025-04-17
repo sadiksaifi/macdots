@@ -123,31 +123,28 @@ alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
 
-# 1 | HP M24f FHD
-# 2 | DELL U2723QE
-# 3 | Built-in Retina Display
-[workspace-to-monitor-force-assignment]
-1 = 'HP M24f FHD'
-2 = 'DELL U2723QE'
-3 = 'DELL U2723QE'
-4 = 'main'
-5 = 'main'
-6 = 'main'
-7 = 'main'
-8 = 'main'
-9 = 'main'
-
-# alt-shift-f = 'fullscreen'
-
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
-
+#See: https://nikitabobko.github.io/AeroSpace/commands#resize
 alt-shift-r = 'mode resize'
+
+# 1 | HP M24f FHD
+# 2 | DELL U2723QE
+# 3 | Built-in Retina Display
+# [workspace-to-monitor-force-assignment]
+# 1 = 'HP M24f FHD'
+# 2 = 'DELL U2723QE'
+# 3 = 'DELL U2723QE'
+# 4 = 'main'
+# 5 = 'main'
+# 6 = 'main'
+# 7 = 'main'
+# 8 = 'main'
+# 9 = 'main'
 
 [mode.resize.binding]
 h = 'resize width -50'
@@ -187,17 +184,14 @@ run = "move-node-to-workspace 1"
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browse'
 run = "move-node-to-workspace 1"
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = "move-node-to-workspace 1"
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = "move-node-to-workspace 1"
 
-# Workspace 2 - Dev work
-[[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
-run = "move-node-to-workspace 2"
-[[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
-run = "move-node-to-workspace 2"
-[[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = "move-node-to-workspace 2"
+# Workspace 2 - Terminals & IDEs
 [[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
 run = "move-node-to-workspace 2"
@@ -213,9 +207,26 @@ run = "move-node-to-workspace 2"
 [[on-window-detected]]
 if.app-id = 'com.apple.dt.Xcode'
 run = "move-node-to-workspace 2"
-# [[on-window-detected]]
-# if.app-id = "com.apple.iphonesimulator"
-# run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'com.github.wez.wezterm'
+run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = "move-node-to-workspace 2"
+
+# Workspace 3 - MISC
+[[on-window-detected]]
+if.app-id = 'com.github.Electron'
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'io.httpie.desktop'
+run = "move-node-to-workspace 3"
 
 # Workspace 4 - Socials
 [[on-window-detected]]
@@ -243,12 +254,6 @@ if.app-id = 'com.apple.Music'
 run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
-run = "move-node-to-workspace 5"
-[[on-window-detected]]
-if.app-id = 'com.github.Electron'
-run = "move-node-to-workspace 5"
-[[on-window-detected]]
-if.app-id = 'com.postmanlabs.mac'
 run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.figma.Desktop'

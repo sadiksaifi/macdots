@@ -11,9 +11,12 @@ plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "esc/conda-zsh-completion"
 plug "zap-zsh/supercharge"
+plug "zap-zsh/fzf"
+plug "sadiksaifi/zsh-keybindings" ## Checkout https://github.com/sadiksaifi/zsh-keybindings
 
 #General Key-bindings
-bindkey -s '^f' 'tmux-sessionizer\n'
+bindkey -s '^o' 'tmux-sessionizer\n'
+bindkey -s '^y' 'y\n'
 
 #Aliases
 alias cp='cp -ivr'
@@ -25,6 +28,15 @@ alias mkdir='mkdir -pv'
 alias grep='grep --color=auto'
 alias dots='/usr/bin/git --git-dir=$HOME/.macdots.git --work-tree=$HOME'
 alias gitlog='git log --all --decorate --graph'
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 # Prompt
 eval "$(starship init zsh)"
