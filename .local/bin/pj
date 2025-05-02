@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Define directories as an array for robustness
+dirs=(
+  "$HOME/Projects/"
+  "$HOME/Repos/"
+  "$HOME/.config/"
+  "$HOME/.local/"
+  "$HOME/Personal"
+)
+
+# Select directory using argument or mac-menu if no argument provided
+if [ $# -eq 1 ]; then
+  selected="$1"
+else
+  selected=$(find "${dirs[@]}" -mindepth 1 -maxdepth 1 -type d \
+    -not -path '*/.git' \
+    -not -path '*/node_modules' \
+    -not -path '*/.yarn' \
+    2>/dev/null | /usr/local/bin/mac-menu) # Learn more about mac-menu: https://github.com/sadiksaifi/mac-menu
+fi
+
+# Exit if no directory is selected
+[ -z "$selected" ] && exit 0
+
+# Open the selected directory with Cursor
+/opt/homebrew/bin/cursor "$selected"
