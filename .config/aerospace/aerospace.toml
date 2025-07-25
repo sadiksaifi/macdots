@@ -111,6 +111,7 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
+alt-0 = 'workspace 0'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1'
@@ -122,6 +123,7 @@ alt-shift-6 = 'move-node-to-workspace 6'
 alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
+alt-shift-0 = 'move-node-to-workspace 0'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
@@ -135,16 +137,17 @@ alt-shift-r = 'mode resize'
 # 1 | HP M24f FHD
 # 2 | DELL U2723QE
 # 3 | Built-in Retina Display
-# [workspace-to-monitor-force-assignment]
-# 1 = 'HP M24f FHD'
-# 2 = 'DELL U2723QE'
-# 3 = 'DELL U2723QE'
-# 4 = 'main'
-# 5 = 'main'
-# 6 = 'main'
-# 7 = 'main'
-# 8 = 'main'
-# 9 = 'main'
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'main'
+5 = 'main'
+6 = 'main'
+7 = 'main'
+8 = 'main'
+9 = 'main'
+0 = 'Built-in Retina Display'
 
 [mode.resize.binding]
 h = 'resize width -50'
@@ -177,15 +180,17 @@ alt-shift-l = ['join-with right', 'mode main']
 
 # Workspace Rules
 
+# Workspace 0
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = "move-node-to-workspace 0"
+
 # Workspace 1
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
 run = "move-node-to-workspace 1"
 [[on-window-detected]]
-if.app-id = 'company.thebrowser.Browse'
-run = "move-node-to-workspace 1"
-[[on-window-detected]]
-if.app-id = 'app.zen-browser.zen'
+if.app-id = 'company.thebrowser.Browser'
 run = "move-node-to-workspace 1"
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
@@ -213,9 +218,21 @@ run = "move-node-to-workspace 2"
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
 run = "move-node-to-workspace 2"
-[[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = "move-node-to-workspace 2"
+# [[on-window-detected]]
+# if.app-id = 'com.mitchellh.ghostty'
+# run = "move-node-to-workspace 2"
+# Move apps directly to a workspace
+# Use 'aerospace list-apps' to get the app-id
+# [[on-window-detected]]
+# if.app-id = "com.mitchellh.ghostty"
+# run = [
+#   # FIX: this is a workaround for https://github.com/nikitabobko/AeroSpace/issues/68
+#   # this was also observed in:
+#   # - https://github.com/ghostty-org/ghostty/issues/1840
+#   # - https://github.com/ghostty-org/ghostty/issues/2006
+#   "layout floating",
+#   "move-node-to-workspace 2",
+# ]
 
 # Workspace 3 - MISC
 [[on-window-detected]]
@@ -264,6 +281,10 @@ run = "move-node-to-workspace 5"
 # iPhone Simulator
 [[on-window-detected]]
 if.app-id = "com.apple.iphonesimulator"
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = "com.apple.finder"
 run = "layout floating"
 
 [[on-window-detected]]

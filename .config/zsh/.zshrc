@@ -28,6 +28,7 @@ alias mkdir='mkdir -pv'
 alias grep='grep --color=auto'
 alias dots='/usr/bin/git --git-dir=$HOME/.macdots.git --work-tree=$HOME'
 alias gitlog='git log --all --decorate --graph'
+alias rmn='find . -type d -name "node_modules" -prune -exec \rm -rf {} +'
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd

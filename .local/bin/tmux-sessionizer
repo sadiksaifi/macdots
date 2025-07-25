@@ -2,11 +2,13 @@
 
 dirs="$HOME/Projects/ $HOME/Repos/ $HOME/.config/ $HOME/.local/ $HOME/Personal $HOME/Personal/learn/"
 
+
+clear
 # Select directory using argument or fzf if no argument provided
-if [ $# -eq 1 ]; then
-  selected="$1"
-else
-  selected=$(find $dirs -mindepth 1 -maxdepth 1 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \) | fzf)
+if [ -n "$1" ] && [ "$1" = "--active" ]; then
+	selected=$(tmux ls | awk -F ':' '{ print $1 }' | fzf )
+else 
+	selected=$(find $dirs -mindepth 1 -maxdepth 2 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \) | fzf)
 fi
 
 # Exit if no directory is selected
