@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-dirs="$HOME/Projects/ $HOME/Repos/ $HOME/.config/ $HOME/.local/ $HOME/Personal $HOME/Personal/learn/"
+dirs="$HOME/Projects/ $HOME/Repos/ $HOME/.config/ $HOME/.local/"
 
 
 clear

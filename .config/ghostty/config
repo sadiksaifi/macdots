@@ -1,6 +1,6 @@
 font-family = "JetBrainsMono Nerd Font"
 font-size = 20
-theme = light:rose-pine-dawn,dark:rose-pine
+theme = dark:Rose Pine,light:Rose Pine Dawn
 shell-integration-features = no-cursor,sudo,no-title
 background-opacity = 1
 background-blur = true

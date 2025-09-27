@@ -57,7 +57,7 @@ inner.horizontal = 10
 inner.vertical =   10
 outer.left =       10
 outer.bottom =     10
-outer.top =        10
+outer.top =        0
 outer.right =      10
 
 # 'main' binding mode declaration
@@ -195,6 +195,9 @@ run = "move-node-to-workspace 1"
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = "move-node-to-workspace 1"
+[[on-window-detected]]
+if.app-id = 'net.imput.helium'
+run = "move-node-to-workspace 1"
 
 # Workspace 2 - Terminals & IDEs
 [[on-window-detected]]
@@ -217,6 +220,9 @@ if.app-id = 'com.github.wez.wezterm'
 run = "move-node-to-workspace 2"
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
+run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92' # cursor
 run = "move-node-to-workspace 2"
 # [[on-window-detected]]
 # if.app-id = 'com.mitchellh.ghostty'
@@ -244,6 +250,9 @@ run = "move-node-to-workspace 3"
 [[on-window-detected]]
 if.app-id = 'io.httpie.desktop'
 run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.figma.Desktop'
+run = "move-node-to-workspace 3"
 
 # Workspace 4 - Socials
 [[on-window-detected]]
@@ -264,6 +273,9 @@ run = "move-node-to-workspace 4"
 [[on-window-detected]]
 if.app-id = 'com.openai.chat'
 run = "move-node-to-workspace 4"
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.mdpkiolbdkhdjpekfbkbmhigcaggjagi'
+run = "move-node-to-workspace 4"
 
 # Workspace 5 - Other
 [[on-window-detected]]
@@ -271,9 +283,6 @@ if.app-id = 'com.apple.Music'
 run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
-run = "move-node-to-workspace 5"
-[[on-window-detected]]
-if.app-id = 'com.figma.Desktop'
 run = "move-node-to-workspace 5"
 
 ## Custom floating Rules
@@ -289,4 +298,12 @@ run = "layout floating"
 
 [[on-window-detected]]
 if.app-id = "io.metamask.MetaMask"
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = "com.apple.FaceTime"
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = "com.apple.Notes"
 run = "layout floating"

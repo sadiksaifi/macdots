@@ -18,4 +18,7 @@ export LESSHISTFILE=-
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
 # FZF Exports
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview-window=right:60% --preview 'if [ -d {} ]; then fd --color=always . {} | bat --color=always --style=header,grid --line-range :500; else bat --color=always --style=header,grid --line-range :500 {}; fi'"
+export FZF_DEFAULT_OPTS="--height=40% --margin=33%,33%,0% --pointer=' ' --prompt=' ' --color=gutter:-1 --border --layout=reverse --no-scrollbar --no-info --highlight-line"
+
+# XCode
+export PATH="/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
