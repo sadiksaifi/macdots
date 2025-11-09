@@ -2,6 +2,7 @@ font-family = "JetBrainsMono Nerd Font"
 font-size = 20
 theme = dark:Rose Pine,light:Rose Pine Dawn
 shell-integration-features = no-cursor,sudo,no-title
+# background-opacity = 0.8
 background-opacity = 1
 background-blur = true
 
@@ -9,10 +10,13 @@ unfocused-split-opacity = 1
 
 window-padding-balance = true 
 window-save-state = always
-macos-titlebar-style = tabs
+macos-titlebar-style = hidden
 window-colorspace = "display-p3"
 confirm-close-surface = false
-background = #1E1E1E
+background=#141415
+# background=#14161b
+# background = #1E1E1E
+# background = #000000
 
 # # keybindings
 # keybind = ctrl+b>x=close_surface

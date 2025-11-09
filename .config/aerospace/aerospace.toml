@@ -53,12 +53,12 @@ on-focus-changed = "move-mouse window-lazy-center"
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
+inner.horizontal = 5
+inner.vertical =   5
+outer.left =       0
+outer.bottom =     0
 outer.top =        0
-outer.right =      10
+outer.right =      0
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -183,7 +183,7 @@ alt-shift-l = ['join-with right', 'mode main']
 # Workspace 0
 [[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
-run = "move-node-to-workspace 0"
+run = "move-node-to-workspace 1"
 
 # Workspace 1
 [[on-window-detected]]
@@ -224,6 +224,12 @@ run = "move-node-to-workspace 2"
 [[on-window-detected]]
 if.app-id = 'com.todesktop.230313mzl4w4u92' # cursor
 run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'org.alacritty'
+run = "move-node-to-workspace 2"
 # [[on-window-detected]]
 # if.app-id = 'com.mitchellh.ghostty'
 # run = "move-node-to-workspace 2"
@@ -240,57 +246,68 @@ run = "move-node-to-workspace 2"
 #   "move-node-to-workspace 2",
 # ]
 
-# Workspace 3 - MISC
+# Workspace 4 - MISC
+
+# Workspace 4 - Others
 [[on-window-detected]]
 if.app-id = 'com.github.Electron'
-run = "move-node-to-workspace 3"
+run = "move-node-to-workspace 4"
 [[on-window-detected]]
 if.app-id = 'com.postmanlabs.mac'
-run = "move-node-to-workspace 3"
+run = "move-node-to-workspace 4"
 [[on-window-detected]]
 if.app-id = 'io.httpie.desktop'
-run = "move-node-to-workspace 3"
+run = "move-node-to-workspace 4"
+[[on-window-detected]]
+if.app-id = 'com.getapi.GetAPI'
+run = "move-node-to-workspace 4"
 [[on-window-detected]]
 if.app-id = 'com.figma.Desktop'
-run = "move-node-to-workspace 3"
+run = "move-node-to-workspace 4"
 
-# Workspace 4 - Socials
+# Workspace 5 - Socials
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.apple.mail'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'notion.id'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.atlassian.trello'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.openai.chat'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 5"
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome.app.mdpkiolbdkhdjpekfbkbmhigcaggjagi'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 5"
 
-# Workspace 5 - Other
+# Workspace 0 - Other
 [[on-window-detected]]
 if.app-id = 'com.apple.Music'
-run = "move-node-to-workspace 5"
+run = "move-node-to-workspace 0"
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = "move-node-to-workspace 0"
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
-run = "move-node-to-workspace 5"
+run = "move-node-to-workspace 0"
 
-## Custom floating Rules
-
-# iPhone Simulator
+# # iPhone Simulator
 [[on-window-detected]]
 if.app-id = "com.apple.iphonesimulator"
-run = "layout floating"
+run = "layout tiling"
+
+## Custom floating Rules
 
 [[on-window-detected]]
 if.app-id = "com.apple.finder"

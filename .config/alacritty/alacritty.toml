@@ -1,0 +1,22 @@
+[env]
+TERM = "screen-256color"
+
+[font]
+size = 21.4
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[window]
+opacity = 1.0
+decorations = "none"
+dynamic_padding = false
+option_as_alt = "Both"
+
+[window.padding]
+x = 0
+y = 0
+
+[colors.primary]
+background = "#141415"

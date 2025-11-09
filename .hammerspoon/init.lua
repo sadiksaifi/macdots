@@ -1,3 +1,18 @@
-hs.hotkey.bind({ "cmd", "shift" }, "return", function()
-	hs.execute("pj", true)
-end)
+-- local leader = hs.hotkey.modal.new({ "alt" }, "space")
+--
+-- local applications = {
+-- 	{ "b", "Google Chrome" },
+-- 	{ "t", "ghostty" },
+-- 	{ "w", "WhatsApp" },
+-- 	{ "s", "Messages" },
+-- 	{ "f", "Figma" },
+-- 	{ "n", "Notes" },
+-- 	{ "m", "Mail" },
+-- }
+--
+-- for i, v in ipairs(applications) do
+-- 	leader:bind({}, v[1], function()
+-- 		hs.application.launchOrFocus(v[2])
+-- 		leader:exit() -- Exit the modal state after the key is pressed
+-- 	end)
+-- end
