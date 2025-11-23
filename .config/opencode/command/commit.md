@@ -1,5 +1,6 @@
 ---
 description: Generate commit message for git repo
+model: opencode/grok-code
 agent: build
 ---
 

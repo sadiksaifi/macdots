@@ -1,14 +1,6 @@
 #  macOS dotfiles
 
-This is a collection of dotfiles for macOS setup. It includes configurations for:
-
-- [Git](.gitconfig)
-- [Vim](.vimrc)
-- [Neovim](https://github.com/sadiksaifi/nvim.git)
-- [Zsh](.config/zsh/.zshrc)
-- [Ghostty](.config/ghostty/config)
-- [Aerospace](.config/aerospace/aerospace.toml)
-- [Starship](.config/starship.toml)
+A collection of configuration files for setting up and maintaining a personalized macOS development environment.
 
 ## Installation
 
@@ -22,6 +14,13 @@ rm -rf tmpdotfiles
 alias dots='/usr/bin/git --git-dir=$HOME/.macdots.git/ --work-tree=$HOME'
 dots config --local status.showUntrackedFiles no
 ```
+
+## About this setup
+This repository uses the Git bare-repo method for managing dotfiles.
+The actual repository lives in ~/.macdots.git, while your $HOME directory acts as the working tree.
+This keeps your home folder clean and avoids the clutter of a visible .git directory.
+
+If you want a detailed explanation of how this approach works (and why it’s great), check out the full guide on my blog: [Manage Dotfiles with Git Bare Repository](https://blog.sadiksaifi.dev/manage-dotfiles-with-git-bare-repository/)
 
 ## License
 

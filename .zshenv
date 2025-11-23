@@ -68,3 +68,6 @@ esac
 
 # Bun completions (safe)
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# SVU completions
+[ -s "$HOME/.config/zsh/completions/svu" ] && source "$HOME/.config/zsh/completions/svu"
