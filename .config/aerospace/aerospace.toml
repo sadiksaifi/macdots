@@ -53,8 +53,8 @@ on-focus-changed = "move-mouse window-lazy-center"
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 5
-inner.vertical =   5
+inner.horizontal = 0
+inner.vertical =   0
 outer.left =       0
 outer.bottom =     0
 outer.top =        0
@@ -180,12 +180,10 @@ alt-shift-l = ['join-with right', 'mode main']
 
 # Workspace Rules
 
-# Workspace 0
+# Workspace 1
 [[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
 run = "move-node-to-workspace 1"
-
-# Workspace 1
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
 run = "move-node-to-workspace 1"
@@ -198,23 +196,11 @@ run = "move-node-to-workspace 1"
 [[on-window-detected]]
 if.app-id = 'net.imput.helium'
 run = "move-node-to-workspace 1"
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.dia'
+run = "move-node-to-workspace 1"
 
-# Workspace 2 - Terminals & IDEs
-[[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
-run = "move-node-to-workspace 2"
-[[on-window-detected]]
-if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = "move-node-to-workspace 2"
-[[on-window-detected]]
-if.app-id = 'dev.zed.Zed'
-run = "move-node-to-workspace 2"
-[[on-window-detected]]
-if.app-id = 'com.jetbrains.WebStorm'
-run = "move-node-to-workspace 2"
-[[on-window-detected]]
-if.app-id = 'com.apple.dt.Xcode'
-run = "move-node-to-workspace 2"
+# Workspace 2 - Terminals
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
 run = "move-node-to-workspace 2"
@@ -222,31 +208,31 @@ run = "move-node-to-workspace 2"
 if.app-id = 'com.googlecode.iterm2'
 run = "move-node-to-workspace 2"
 [[on-window-detected]]
-if.app-id = 'com.todesktop.230313mzl4w4u92' # cursor
-run = "move-node-to-workspace 2"
-[[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = "move-node-to-workspace 2"
 [[on-window-detected]]
 if.app-id = 'org.alacritty'
 run = "move-node-to-workspace 2"
-# [[on-window-detected]]
-# if.app-id = 'com.mitchellh.ghostty'
-# run = "move-node-to-workspace 2"
-# Move apps directly to a workspace
-# Use 'aerospace list-apps' to get the app-id
-# [[on-window-detected]]
-# if.app-id = "com.mitchellh.ghostty"
-# run = [
-#   # FIX: this is a workaround for https://github.com/nikitabobko/AeroSpace/issues/68
-#   # this was also observed in:
-#   # - https://github.com/ghostty-org/ghostty/issues/1840
-#   # - https://github.com/ghostty-org/ghostty/issues/2006
-#   "layout floating",
-#   "move-node-to-workspace 2",
-# ]
 
-# Workspace 4 - MISC
+# Workspace 3 - Code Editors/IDEs
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92' # cursor
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.WebStorm'
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.apple.dt.Xcode'
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.google.antigravity'
+run = "move-node-to-workspace 3"
 
 # Workspace 4 - Others
 [[on-window-detected]]
@@ -262,7 +248,13 @@ run = "move-node-to-workspace 4"
 if.app-id = 'com.getapi.GetAPI'
 run = "move-node-to-workspace 4"
 [[on-window-detected]]
+if.app-id = 'com.tinyapp.TablePlus'
+run = "move-node-to-workspace 4"
+[[on-window-detected]]
 if.app-id = 'com.figma.Desktop'
+run = "move-node-to-workspace 4"
+[[on-window-detected]]
+if.app-id = 'com.proxyman.NSProxy'
 run = "move-node-to-workspace 4"
 
 # Workspace 5 - Socials
@@ -286,9 +278,6 @@ if.app-id = 'com.openai.chat'
 run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'
-run = "move-node-to-workspace 5"
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome.app.mdpkiolbdkhdjpekfbkbmhigcaggjagi'
 run = "move-node-to-workspace 5"
 
 # Workspace 0 - Other

@@ -1,0 +1,23 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"permission": {
+		"edit": "ask",
+		"webfetch": "allow",
+		"bash": {
+			"*": "ask",
+			"git diff *": "allow",
+			"git commit *": "ask"
+		},
+	},
+	"mcp": {
+		"context7": {
+			"type": "local",
+			"command": [
+				"npx",
+				"-y",
+				"@upstash/context7-mcp",
+			],
+			"enabled": true
+		}
+	}
+}

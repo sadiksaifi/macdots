@@ -22,6 +22,7 @@ bindkey -s '^y' 'y\n'
 alias cp='cp -ivr'
 alias mv='mv -iv'
 alias rm="trash"
+alias "rm -rf"="trash"
 alias ls='eza -lh --color=auto --group-directories-first --icons'
 alias ll='eza -lah --color=auto --group-directories-first --icons'
 alias mkdir='mkdir -pv'
@@ -41,10 +42,3 @@ function y() {
 
 # Prompt
 eval "$(starship init zsh)"
-
-# bun completions
-[ -s "/Users/sdk/.bun/_bun" ] && source "/Users/sdk/.bun/_bun"
-. "/Users/sdk/.deno/env"
-
-# Add deno completions to search path
-if [[ ":$FPATH:" != *":/Users/sdk/.config/zsh/completions:"* ]]; then export FPATH="/Users/sdk/.config/zsh/completions:$FPATH"; fi
