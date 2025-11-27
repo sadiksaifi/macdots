@@ -21,8 +21,6 @@ bindkey -s '^y' 'y\n'
 #Aliases
 alias cp='cp -ivr'
 alias mv='mv -iv'
-alias rm="trash"
-alias "rm -rf"="trash"
 alias ls='eza -lh --color=auto --group-directories-first --icons'
 alias ll='eza -lah --color=auto --group-directories-first --icons'
 alias mkdir='mkdir -pv'
@@ -40,5 +38,12 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+rm() {
+    trash
+}
+
 # Prompt
-eval "$(starship init zsh)"
+# Pure prompt setup
+fpath+=$(brew --prefix)/share/zsh/site-functions
+autoload -U promptinit; promptinit
+prompt pure
