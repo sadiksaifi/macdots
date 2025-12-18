@@ -13,6 +13,7 @@ plug "esc/conda-zsh-completion"
 plug "zap-zsh/supercharge"
 plug "zap-zsh/fzf"
 plug "sadiksaifi/zsh-keybindings" ## Checkout https://github.com/sadiksaifi/zsh-keybindings
+plug "sadiksaifi/zsh-minimal-prompt" ## Checkout https://github.com/sadiksaifi/zsh-minimal-prompt
 
 #General Key-bindings
 bindkey -s '^o' 'tmux-sessionizer\n'
@@ -21,6 +22,8 @@ bindkey -s '^y' 'y\n'
 #Aliases
 alias cp='cp -ivr'
 alias mv='mv -iv'
+alias rm='safe-rm'
+alias urm="command rm"
 alias ls='eza -lh --color=auto --group-directories-first --icons'
 alias ll='eza -lah --color=auto --group-directories-first --icons'
 alias mkdir='mkdir -pv'
@@ -35,15 +38,5 @@ function y() {
 	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd"
 	fi
-	rm -f -- "$tmp"
+	\rm -f -- "$tmp"
 }
-
-rm() {
-    trash
-}
-
-# Prompt
-# Pure prompt setup
-fpath+=$(brew --prefix)/share/zsh/site-functions
-autoload -U promptinit; promptinit
-prompt pure

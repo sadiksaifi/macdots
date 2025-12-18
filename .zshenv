@@ -33,13 +33,23 @@ export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
 export PATH="$HOME/.opencode/bin:$PATH"
 
 # Colima (Docker)
-export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+# export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 
 # Bob
 [ -s "$HOME/.local/share/bob/env/env.sh" ] && . "$HOME/.local/share/bob/env/env.sh"
 
 # FZF
-export FZF_DEFAULT_OPTS="--height=40% --margin=33%,33%,0% --pointer=' ' --prompt=' ' --color=gutter:-1 --border --layout=reverse --no-scrollbar --no-info --highlight-line"
+export FZF_DEFAULT_OPTS="\
+--height=60% \
+--margin=15%,15%,0% \
+--pointer=' ' \
+--prompt=' ' \
+--color=gutter:-1 \
+--border \
+--layout=reverse \
+--no-scrollbar \
+--no-info \
+--highlight-line"
 
 # GLOBAL DEFAULTS
 export TERM="xterm-256color"

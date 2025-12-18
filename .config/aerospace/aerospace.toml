@@ -53,8 +53,8 @@ on-focus-changed = "move-mouse window-lazy-center"
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 0
-inner.vertical =   0
+inner.horizontal = 5
+inner.vertical =   5
 outer.left =       0
 outer.bottom =     0
 outer.top =        0
@@ -208,8 +208,11 @@ run = "move-node-to-workspace 2"
 if.app-id = 'com.googlecode.iterm2'
 run = "move-node-to-workspace 2"
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = "move-node-to-workspace 2"
+if.app-id="com.mitchellh.ghostty"
+run= [
+  # "layout tiling",
+	"move-node-to-workspace 2"
+]
 [[on-window-detected]]
 if.app-id = 'org.alacritty'
 run = "move-node-to-workspace 2"
@@ -294,12 +297,26 @@ run = "move-node-to-workspace 0"
 # # iPhone Simulator
 [[on-window-detected]]
 if.app-id = "com.apple.iphonesimulator"
-run = "layout tiling"
+run = [
+	"layout tiling",
+	"resize width 1138",
+	"focus-back-and-forth"
+]
 
 ## Custom floating Rules
 
 [[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout floating",
+]
+
+[[on-window-detected]]
 if.app-id = "com.apple.finder"
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = "com.apple.iCal"
 run = "layout floating"
 
 [[on-window-detected]]
@@ -312,4 +329,8 @@ run = "layout floating"
 
 [[on-window-detected]]
 if.app-id = "com.apple.Notes"
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = "com.apple.Passwords"
 run = "layout floating"

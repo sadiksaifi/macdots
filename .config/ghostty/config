@@ -3,14 +3,15 @@ font-size = 20
 theme = dark:Rose Pine,light:Rose Pine Dawn
 shell-integration-features = no-cursor,sudo,no-title
 # background-opacity = 0.8
-background-opacity = 1
-background-blur = true
+# background-opacity = 1
+# background-blur = true
 
 unfocused-split-opacity = 1
 
 window-padding-balance = true 
 window-save-state = always
 macos-titlebar-style = hidden
+# macos-titlebar-style = tabs #transparent, tabs, native
 window-decoration = none
 macos-window-shadow = false
 window-colorspace = "display-p3"
