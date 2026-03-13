@@ -5,4 +5,5 @@ set ignorecase
 set incsearch
 set showmatch
 set background=dark
+set rnu
 syntax enable
