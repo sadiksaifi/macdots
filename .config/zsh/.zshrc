@@ -51,7 +51,6 @@ bindkey -s '^y' 'y\n'
 alias cp='cp -ivr'
 alias mv='mv -iv'
 alias rm='safe-rm'
-alias urm='command rm'
 alias ls='eza -lh --color=auto --group-directories-first --icons'
 alias ll='eza -lah --color=auto --group-directories-first --icons'
 alias mkdir='mkdir -pv'
@@ -59,6 +58,10 @@ alias grep='grep --color=auto'
 alias dots='/usr/bin/git --git-dir=$HOME/.macdots.git --work-tree=$HOME'
 alias gitlog='git log --all --decorate --graph'
 alias rmn='find . -type d -name "node_modules" -prune -exec \rm -rf {} +'
+alias ccd='claude --model opus --effort high --dangerously-skip-permissions'
+alias cx='codex -m gpt-5.4 -c model_reasoning_effort="high" --dangerously-bypass-approvals-and-sandbox'
+alias gc='gemini --model gemini-3.1-pro-preview --yolo'
+alias oc='opencode'
 
 function y() {
 	local tmp cwd

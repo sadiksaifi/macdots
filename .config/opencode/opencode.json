@@ -1,24 +1,19 @@
 {
-	"$schema": "https://opencode.ai/config.json",
-	"model": "opencode/grok-code",
-	"permission": {
-		"edit": "ask",
-		"webfetch": "allow",
-		"bash": {
-			"*": "ask",
-			"git diff *": "allow",
-			"git commit *": "ask"
-		},
-	},
-	"mcp": {
-		"context7": {
-			"type": "local",
-			"command": [
-				"npx",
-				"-y",
-				"@upstash/context7-mcp",
-			],
-			"enabled": true
-		}
-	}
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "ask",
+  "autoupdate": false,
+  "permission": {
+    "*": "allow"
+  },
+  "mcp": {
+    "context7": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "enabled": true
+    }
+  }
 }
