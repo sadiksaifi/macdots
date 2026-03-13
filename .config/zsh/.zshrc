@@ -6,24 +6,52 @@
 # Zap plugin manager - https://www.zapzsh.com
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
-# Plugins
+# Completion paths
+fpath=(
+  /opt/homebrew/share/zsh/site-functions
+  $HOME/.config/zsh/completions
+  $fpath
+)
+
+# Plugins (load before compinit so plugin completions are registered)
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "esc/conda-zsh-completion"
 plug "zap-zsh/supercharge"
 plug "zap-zsh/fzf"
-plug "sadiksaifi/zsh-keybindings" ## Checkout https://github.com/sadiksaifi/zsh-keybindings
-plug "sadiksaifi/zsh-minimal-prompt" ## Checkout https://github.com/sadiksaifi/zsh-minimal-prompt
+plug "sadiksaifi/zsh-keybindings"
+plug "sadiksaifi/zsh-minimal-prompt"
 
-#General Key-bindings
+# Initialize completion system (cached — full rebuild once per day)
+autoload -Uz compinit
+if [[ -n $ZDOTDIR/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+# FZF
+export FZF_DEFAULT_OPTS="\
+--height=60% \
+--margin=15%,15%,0% \
+--pointer=' ' \
+--prompt=' ' \
+--color=gutter:-1 \
+--border \
+--layout=reverse \
+--no-scrollbar \
+--no-info \
+--highlight-line"
+
+# General Key-bindings
 bindkey -s '^o' 'tmux-sessionizer\n'
 bindkey -s '^y' 'y\n'
 
-#Aliases
+# Aliases
 alias cp='cp -ivr'
 alias mv='mv -iv'
 alias rm='safe-rm'
-alias urm="command rm"
+alias urm='command rm'
 alias ls='eza -lh --color=auto --group-directories-first --icons'
 alias ll='eza -lah --color=auto --group-directories-first --icons'
 alias mkdir='mkdir -pv'
@@ -33,10 +61,14 @@ alias gitlog='git log --all --decorate --graph'
 alias rmn='find . -type d -name "node_modules" -prune -exec \rm -rf {} +'
 
 function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	local tmp cwd
+	tmp="$(mktemp -t "yazi-cwd.XXXXXX")" || return 1
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd"
 	fi
 	\rm -f -- "$tmp"
 }
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"

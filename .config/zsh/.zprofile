@@ -1,5 +1,41 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Added by OrbStack: command-line tools and integration
-# This won't be added again if you remove it.
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+# OrbStack
+source "$HOME/.orbstack/shell/init.zsh" 2>/dev/null || :
+
+# PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Node version manager (n)
+export N_PREFIX="$HOME/n"
+case ":$PATH:" in
+  *":$N_PREFIX/bin:"*) ;;
+  *) export PATH="$PATH:$N_PREFIX/bin" ;;
+esac
+
+# Xcode
+export PATH="/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
+
+# Ruby
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
+
+# Android / Java
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
+
+# Rust toolchain
+. "$HOME/.cargo/env"
+. "$HOME/.local/share/bob/env/env.sh"
+
+# Interactive defaults
+export TERM="xterm-256color"
+export READER="zathura"
+export MANPAGER="nvim +Man!"
