@@ -20,7 +20,6 @@ plug "esc/conda-zsh-completion"
 plug "zap-zsh/supercharge"
 plug "zap-zsh/fzf"
 plug "sadiksaifi/zsh-keybindings"
-plug "sadiksaifi/zsh-minimal-prompt"
 
 # Initialize completion system (cached — full rebuild once per day)
 autoload -Uz compinit
@@ -76,3 +75,6 @@ function y() {
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# prompt
+eval "$(starship init zsh)"

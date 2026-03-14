@@ -1,3 +1,4 @@
+# Brew shellenv
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # OrbStack
