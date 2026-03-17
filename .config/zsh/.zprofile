@@ -36,7 +36,13 @@ export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
 . "$HOME/.cargo/env"
 . "$HOME/.local/share/bob/env/env.sh"
 
+# Go
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
+
 # Interactive defaults
 export TERM="xterm-256color"
 export READER="zathura"
 export MANPAGER="nvim +Man!"
+export PATH="/Users/sdk/.lmstudio/bin:$PATH"
