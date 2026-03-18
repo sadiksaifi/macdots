@@ -3,7 +3,7 @@
   "includeCoAuthoredBy": false,
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/hooks/statusline.ts"
+    "command": "~/.claude/hooks/statusline"
   },
   "enabledPlugins": {
     "context7@claude-plugins-official": true,

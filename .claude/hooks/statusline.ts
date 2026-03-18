@@ -1,98 +1,108 @@
 #!/usr/bin/env bun
 // ─────────────────────────────────────────────────────────────
-// Claude Code Statusline Hook
+// Claude Code Statusline Hook (TypeScript reference)
+//
 // Reads JSON from stdin (piped by Claude Code) and outputs a
 // single-line statusline with Nerd Font icons and ANSI colors.
 //
-// Example output:
-//   󰇼 Opus 4.6 | ████░░░░░░ 40% |  3m |  main |  ~/projects/foo
+// Compile (most performant):
+//   bun build --compile --bytecode --minify \
+//     --compile-exec-argv="--smol" \
+//     --no-compile-autoload-dotenv \
+//     --no-compile-autoload-bunfig \
+//     statusline.ts --outfile statusline-bun
 //
-// Segments:
-//   1. Model       — colored by model family (purple/blue/green)
-//   2. Context bar — █/░ usage bar, green <50%, yellow <80%, red 80%+
-//   3. Session time— elapsed since session start, persisted in /tmp
-//   4. Git branch  — current branch, hidden outside git repos
-//   5. Directory   — tilde-contracted working dir, dimmed
+// Run interpreted:
+//   echo '<json>' | bun statusline.ts
 //
-// Requires: Bun, Nerd Font
+// NOTE: The Zig version (statusline.zig) is the active binary.
+//       This file is kept as a readable reference.
 // ─────────────────────────────────────────────────────────────
-import { $ } from "bun";
 
 interface StatusInput {
   model?: { display_name?: string };
   workspace?: { current_dir?: string };
   context_window?: { used_percentage?: number };
-  cost?: { total_cost_usd?: number };
   session_id?: string;
-  version?: string;
 }
 
-const input: StatusInput = await Bun.stdin.json();
-
-const modelName = input.model?.display_name ?? "Claude";
-const usedPct = input.context_window?.used_percentage ?? 0;
-const dir = input.workspace?.current_dir ?? "";
-const sessionId = input.session_id ?? "";
-
-// ANSI codes
 const RESET = "\x1b[0m";
 const DIM = "\x1b[2m";
-
-// Model color based on name
-const modelLower = modelName.toLowerCase();
-const modelColor = modelLower.includes("opus")
-  ? "\x1b[35m"   // purple
-  : modelLower.includes("sonnet")
-    ? "\x1b[34m" // blue
-    : modelLower.includes("haiku")
-      ? "\x1b[32m" // green
-      : "\x1b[37m"; // white
-
-// Tilde-contract directory
-const home = Bun.env.HOME ?? "";
-const displayDir = home && dir.startsWith(home) ? "~" + dir.slice(home.length) : dir;
-
-// Git branch
-const gitResult = await $`git -C ${dir || "."} branch --show-current`.nothrow().quiet();
-const branch = gitResult.exitCode === 0 ? gitResult.text().trim() : "";
-
-// Session elapsed time
-let elapsed = "";
-if (sessionId) {
-  const tmpFile = `/tmp/claude-sl-${sessionId}`;
-  const file = Bun.file(tmpFile);
-  if (await file.exists()) {
-    const start = parseInt(await file.text());
-    const secs = Math.floor((Date.now() - start) / 1000);
-    const mins = Math.floor(secs / 60);
-    const hrs = Math.floor(mins / 60);
-    elapsed = hrs > 0 ? `${hrs}h${mins % 60}m` : mins > 0 ? `${mins}m` : `${secs}s`;
-  } else {
-    await Bun.write(tmpFile, Date.now().toString());
-    elapsed = "0s";
-  }
-}
-
-// Nerd Font icons
-const ICON_MODEL = "\u{f01fc}";
+const ICON_MODEL = "\u{ee0d}"; // nf-fa-robot
 const ICON_BRANCH = "\u{e0a0}";
 const ICON_DIR = "\u{f07c}";
 const ICON_TIME = "\u{f017}";
-const SEP = "|";
 
-// Context usage bar (color-coded)
-const BAR_WIDTH = 10;
-const filled = Math.max(1, Math.round((usedPct / 100) * BAR_WIDTH));
-const barColor = usedPct < 50 ? "\x1b[32m" : usedPct < 80 ? "\x1b[33m" : "\x1b[31m";
-const contextBar = `${barColor}${"█".repeat(filled)}${RESET}${"░".repeat(BAR_WIDTH - filled)}`;
+async function main() {
+  const input: StatusInput = await Bun.stdin.json();
 
-// Build segments: Model | Context Bar | Session Time | Git Branch | Directory
-const segments: string[] = [
-  `${modelColor}${ICON_MODEL} ${modelName}${RESET}`,
-  `${contextBar} ${usedPct}%`,
-  ...(branch ? [`${ICON_BRANCH} ${branch}`] : []),
-  `${DIM}${ICON_DIR} ${displayDir}${RESET}`,
-  ...(elapsed ? [`${ICON_TIME} ${elapsed}`] : []),
-];
+  const modelName = input.model?.display_name ?? "Claude";
+  const usedPct = input.context_window?.used_percentage ?? 0;
+  const dir = input.workspace?.current_dir ?? "";
+  const sessionId = input.session_id ?? "";
 
-await Bun.write(Bun.stdout, segments.join(` ${SEP} `) + "\n");
+  // Model color
+  const ml = modelName.toLowerCase();
+  const modelColor = ml.includes("opus")
+    ? "\x1b[35m"
+    : ml.includes("sonnet")
+      ? "\x1b[34m"
+      : ml.includes("haiku")
+        ? "\x1b[32m"
+        : "\x1b[37m";
+
+  // Tilde-contract directory
+  const home = Bun.env.HOME ?? "";
+  const displayDir = home && dir.startsWith(home) ? "~" + dir.slice(home.length) : dir;
+
+  // Parallel I/O: git branch + session elapsed
+  const [branch, elapsed] = await Promise.all([
+    readGitBranch(dir),
+    sessionElapsed(sessionId),
+  ]);
+
+  // Context bar
+  const filledRaw = Math.round((usedPct / 100) * 10);
+  const filled = usedPct > 0 && filledRaw === 0 ? 1 : filledRaw;
+  const barColor = usedPct < 50 ? "\x1b[32m" : usedPct < 80 ? "\x1b[33m" : "\x1b[31m";
+  const bar = `${barColor}${"█".repeat(filled)}${RESET}${"░".repeat(10 - filled)}`;
+
+  const segments: string[] = [
+    `${modelColor}${ICON_MODEL}  ${modelName}${RESET}`,
+    `${bar} ${usedPct}%`,
+    ...(branch ? [`${ICON_BRANCH} ${branch}`] : []),
+    `${DIM}${ICON_DIR} ${displayDir}${RESET}`,
+    ...(elapsed ? [`${ICON_TIME} ${elapsed}`] : []),
+  ];
+
+  await Bun.write(Bun.stdout, segments.join(" | ") + "\n");
+}
+
+main();
+
+// ── Helpers ──────────────────────────────────────────────────
+
+async function readGitBranch(dir: string): Promise<string> {
+  if (!dir) return "";
+  try {
+    const text = await Bun.file(`${dir}/.git/HEAD`).text();
+    const prefix = "ref: refs/heads/";
+    if (text.startsWith(prefix)) return text.slice(prefix.length).trim();
+  } catch {}
+  return "";
+}
+
+async function sessionElapsed(sessionId: string): Promise<string> {
+  if (!sessionId) return "";
+  const path = `/tmp/claude-sl-${sessionId}`;
+  const f = Bun.file(path);
+  if (await f.exists()) {
+    const start = parseInt(await f.text());
+    const secs = Math.floor((Date.now() - start) / 1000);
+    const mins = Math.floor(secs / 60);
+    const hrs = Math.floor(mins / 60);
+    return hrs > 0 ? `${hrs}h${mins % 60}m` : mins > 0 ? `${mins}m` : `${secs}s`;
+  }
+  await Bun.write(path, Date.now().toString());
+  return "0s";
+}
