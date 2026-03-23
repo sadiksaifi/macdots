@@ -45,3 +45,7 @@ confirm-close-surface = false
 
 # other
 copy-on-select = clipboard
+
+# Keybinds
+keybind = alt+backspace=text:\x1b\x7f
+keybind = shift+enter=text:\n

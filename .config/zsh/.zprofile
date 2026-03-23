@@ -11,13 +11,6 @@ export PATH="$HOME/.local/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Node version manager (n)
-export N_PREFIX="$HOME/n"
-case ":$PATH:" in
-  *":$N_PREFIX/bin:"*) ;;
-  *) export PATH="$PATH:$N_PREFIX/bin" ;;
-esac
-
 # Xcode
 export PATH="/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
 
@@ -34,12 +27,6 @@ export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
 
 # Rust toolchain
 . "$HOME/.cargo/env"
-. "$HOME/.local/share/bob/env/env.sh"
-
-# Go
-export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
-
 
 # Interactive defaults
 export TERM="xterm-256color"

@@ -76,5 +76,8 @@ function y() {
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+# Mise
+eval "$(mise activate zsh)"
+
 # prompt
 eval "$(starship init zsh)"
