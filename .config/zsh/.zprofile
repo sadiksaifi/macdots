@@ -1,3 +1,6 @@
+# Deduplicate PATH
+typeset -U PATH
+
 # Brew shellenv
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
