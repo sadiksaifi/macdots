@@ -1,25 +1,26 @@
 font-family = "JetBrainsMono Nerd Font"
 font-size = 20
-theme = Catppuccin Mocha
+theme = Vague
 shell-integration-features = no-cursor,sudo,no-title
-# background-opacity = 0.8
+background-opacity = 0.93
 # background-opacity = 1
-# background-blur = true
+background-blur = 100
 
 unfocused-split-opacity = 1
 
 window-padding-balance = true 
 window-save-state = always
 macos-titlebar-style = hidden
-# macos-titlebar-style = tabs #transparent, tabs, native
+# macos-titlebar-style = tabs #transparent, tabs, native, hidden
 window-decoration = none
-macos-window-shadow = false
+# macos-window-shadow = false
 window-colorspace = "display-p3"
-confirm-close-surface = false
-# background=#141415
+confirm-close-surface = true
+background=#141415
 # background=#14161b
 # background = #1E1E1E
 # background = #000000
+# background = #242424
 
 # # keybindings
 # keybind = ctrl+b>x=close_surface
@@ -48,4 +49,35 @@ copy-on-select = clipboard
 
 # Keybinds
 keybind = alt+backspace=text:\x1b\x7f
-keybind = shift+enter=text:\n
+keybind = shift+enter=text:\x1b[13;2u
+
+# Unbind Ghostty's default Cmd+N tab switching
+keybind = super+one=unbind
+keybind = super+digit_1=unbind
+keybind = super+two=unbind
+keybind = super+digit_2=unbind
+keybind = super+three=unbind
+keybind = super+digit_3=unbind
+keybind = super+four=unbind
+keybind = super+digit_4=unbind
+keybind = super+five=unbind
+keybind = super+digit_5=unbind
+keybind = super+six=unbind
+keybind = super+digit_6=unbind
+keybind = super+seven=unbind
+keybind = super+digit_7=unbind
+keybind = super+eight=unbind
+keybind = super+digit_8=unbind
+keybind = super+nine=unbind
+keybind = super+digit_9=unbind
+
+# Cmd+N → tmux prefix (Ctrl+B) + N to switch windows
+keybind = super+one=text:\x021
+keybind = super+two=text:\x022
+keybind = super+three=text:\x023
+keybind = super+four=text:\x024
+keybind = super+five=text:\x025
+keybind = super+six=text:\x026
+keybind = super+seven=text:\x027
+keybind = super+eight=text:\x028
+keybind = super+nine=text:\x029
