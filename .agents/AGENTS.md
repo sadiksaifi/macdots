@@ -1,22 +1,17 @@
-# Global Rules
+# Rules
 
-## File Operations
-- **Delete:** `safe-rm` only — never `rm`
-- **Search:** `rg` only — never `grep`
-- **Find:** `fd` only — never `find`
+When responding: be extremely concise. Sacrifice grammar for concision
+
+## Ops
+Delete: `safe-rm` · Search: `rg` · Find: `fd`
 
 ## JS/TS
-- **Always TypeScript** — never plain JS unless told
-- **Always `bun`** — never `npm`, `npx`, `pnpm`, `yarn`, `node`, `python`
-  - `bun install` / `bun add` / `bun remove` / `bun run` / `bunx` / `bun -e "..."`
+Always TypeScript. Runtime: `bun` only.
+Commands: `bun install/add/remove/run`, `bunx`, `bun -e`
 
 ## Python
-- **Always `uv`** — never `pip`, `pip3`, `python`, `python3`, `pipx`, `virtualenv`, `conda`
-  - `uv run` / `uv add` / `uv remove` / `uv sync` / `uv venv` / `uv pip` / `uvx`
+Runtime: `uv` only.
+Commands: `uv run/add/remove/sync/venv/pip`, `uvx`
 
-## Plan Mode
-- Be extremely concise — sacrifice grammar for brevity
-- End with unresolved questions (if any)
-
-## Deviation Policy
-Only deviate from any rule above if explicitly instructed.
+## Deviations
+Explicit instruction required to override any rule.

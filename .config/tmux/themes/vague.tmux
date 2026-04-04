@@ -51,7 +51,9 @@ tmux \
   set-window-option -gq window-status-current-format "$win_current" \;\
 \
   set-option -gq status-left "" \;\
-  set-option -gq status-right "${mod_directory}${mod_session}" \;\
+  set-option -gq status-right "${mod_directory}" \;\
 \
   set-window-option -gq clock-mode-colour "$blue" \;\
-  set-window-option -gq mode-style "fg=$pink bg=$black4 bold"
+  set-window-option -gq mode-style "fg=$pink bg=$black4 bold" \;\
+\
+  bind -n MouseDown1StatusRight choose-tree -Zs

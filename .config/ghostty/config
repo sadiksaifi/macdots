@@ -49,7 +49,7 @@ copy-on-select = clipboard
 
 # Keybinds
 keybind = alt+backspace=text:\x1b\x7f
-keybind = shift+enter=text:\x1b[13;2u
+keybind = shift+enter=text:\x1b\r
 
 # Unbind Ghostty's default Cmd+N tab switching
 keybind = super+one=unbind
