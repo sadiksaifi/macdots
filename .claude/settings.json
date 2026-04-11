@@ -1,7 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "CLAUDE_CODE_NO_FLICKER": "true"
+    "CLAUDE_CODE_NO_FLICKER": "true",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "true"
   },
   "includeCoAuthoredBy": false,
   "hooks": {
@@ -110,6 +111,15 @@
       "Bash(pnpm exec prettier*)",
       "Bash(pnpm exec biome*)",
       "Read",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(cd:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(fd:*)",
+      "Bash(find:*)",
+      "mcp__plugin_*",
+      "Bash(wc:*)",
       "Bash(git status*)",
       "Bash(git log*)",
       "Bash(git diff*)",
@@ -125,7 +135,9 @@
       "Bash(git ls-remote*)",
       "Bash(git describe*)",
       "Bash(git config --get*)",
-      "Bash(git config --list*)"
+      "Bash(git config --list*)",
+      "Bash(gh label:*)",
+      "Bash(gh milestone:*)"
     ]
   }
 }

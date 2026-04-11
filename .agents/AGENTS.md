@@ -1,6 +1,6 @@
 # Rules
 
-When responding: be extremely concise. Sacrifice grammar for concision
+When responding: **be extremely concise, sacrifice grammar for concision**
 
 ## Ops
 Delete: `safe-rm` · Search: `rg` · Find: `fd`

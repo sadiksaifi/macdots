@@ -10,10 +10,6 @@ source "$HOME/.orbstack/shell/init.zsh" 2>/dev/null || :
 # PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-# Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 # Xcode
 export PATH="/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
 
@@ -22,6 +18,9 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
+
+# bun
+export PATH="$HOME/.bun/bin:$PATH"
 
 # Android / Java
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
@@ -36,3 +35,6 @@ export TERM="xterm-256color"
 export READER="zathura"
 export MANPAGER="nvim +Man!"
 export PATH="/Users/sdk/.lmstudio/bin:$PATH"
+
+# Postgres cli
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

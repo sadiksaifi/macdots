@@ -21,13 +21,12 @@ plug "zap-zsh/supercharge"
 plug "zap-zsh/fzf"
 plug "sadiksaifi/zsh-keybindings"
 
-# Initialize completion system (cached — full rebuild once per day)
+# Mise
+eval "$(mise activate zsh)"
+
+# Initialize completion system
 autoload -Uz compinit
-if [[ -n $ZDOTDIR/.zcompdump(#qN.mh+24) ]]; then
-  compinit
-else
-  compinit -C
-fi
+compinit
 
 # FZF
 export FZF_DEFAULT_OPTS="\
@@ -58,10 +57,23 @@ alias dots='/usr/bin/git --git-dir=$HOME/.macdots.git --work-tree=$HOME'
 alias dots-sync-nvim='dots submodule update --remote .config/nvim && dots add .config/nvim && dots commit -m "chore: update nvim submodule"'
 alias gitlog='git log --all --decorate --graph'
 alias rmn='find . -type d -name "node_modules" -prune -exec \rm -rf {} +'
+alias confetti='open raycast://extensions/raycast/raycast/confetti'
 alias ccd='claude --model "opus[1m]" --effort high --dangerously-skip-permissions'
+alias ccda='claude --model "opus[1m]" --effort high --dangerously-skip-permissions --agent ask'
 alias cx='codex -m gpt-5.4 -c model_reasoning_effort="high" --dangerously-bypass-approvals-and-sandbox'
 alias gc='gemini --model gemini-3.1-pro-preview --yolo'
 alias oc='opencode'
+
+_dots() {
+  if (( CURRENT == 2 )); then
+    local -a subcmds=(add commit push pull status diff log checkout branch
+      stash submodule restore reset remote fetch merge rebase config rm mv)
+    _describe 'command' subcmds
+  else
+    _files
+  fi
+}
+compdef _dots dots
 
 function y() {
 	local tmp cwd
@@ -72,12 +84,6 @@ function y() {
 	fi
 	\rm -f -- "$tmp"
 }
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# Mise
-eval "$(mise activate zsh)"
 
 # prompt
 eval "$(starship init zsh)"
