@@ -1,11 +1,12 @@
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
-import { Key } from "@mariozechner/pi-tui";
 import { isSafeBashCommand } from "./bash-guard";
 import { DEFAULT_MODE, MODE_DESCRIPTIONS, MODE_ORDER, MODE_TITLES, MODE_TOOLS, nextMode, normalizeMode } from "./config";
 import { buildModeInstructions } from "./instructions";
 import { MODE_REQUEST_STATE_EVENT, MODE_STATE_EVENT, type Mode, type ModeState } from "./protocol";
+import { loadModeSettings } from "./settings";
 
 export default function modesExtension(pi: ExtensionAPI) {
+	const settings = loadModeSettings();
 	let activeMode: Mode = DEFAULT_MODE;
 	let pendingMode: Mode | undefined;
 
@@ -15,7 +16,7 @@ export default function modesExtension(pi: ExtensionAPI) {
 		pi.events.emit(MODE_STATE_EVENT, payload);
 	};
 
-	const applyMode = (mode: Mode, ctx: ExtensionContext, notify = true, persist = true) => {
+	const applyMode = (mode: Mode, ctx: ExtensionContext, notify = settings.notifyOnChange, persist = true) => {
 		activeMode = mode;
 		pendingMode = undefined;
 		pi.setActiveTools(MODE_TOOLS[mode]);
@@ -28,12 +29,12 @@ export default function modesExtension(pi: ExtensionAPI) {
 		if (mode === activeMode) {
 			pendingMode = undefined;
 			emitModeState();
-			ctx.ui.notify(`mode stays: ${MODE_TITLES[activeMode]}`, "info");
+			if (settings.notifyOnChange) ctx.ui.notify(`mode stays: ${MODE_TITLES[activeMode]}`, "info");
 			return;
 		}
 		pendingMode = mode;
 		emitModeState();
-		ctx.ui.notify(`queued mode: ${MODE_TITLES[mode]}`, "info");
+		if (settings.notifyOnChange) ctx.ui.notify(`queued mode: ${MODE_TITLES[mode]}`, "info");
 	};
 
 	const requestMode = (mode: Mode, ctx: ExtensionContext) => {
@@ -54,7 +55,7 @@ export default function modesExtension(pi: ExtensionAPI) {
 			.filter((e: { type: string; customType?: string }) => e.type === "custom" && e.customType === "mode-state")
 			.pop() as { data?: { mode?: string } } | undefined;
 
-		return normalizeMode(entry?.data?.mode) ?? DEFAULT_MODE;
+		return normalizeMode(entry?.data?.mode) ?? settings.defaultMode ?? DEFAULT_MODE;
 	};
 
 	const selectMode = async (ctx: ExtensionContext) => {
@@ -99,10 +100,17 @@ export default function modesExtension(pi: ExtensionAPI) {
 		},
 	});
 
-	pi.registerShortcut(Key.alt("m"), {
+	pi.registerCommand("mode-cycle", {
 		description: "Cycle agent mode",
-		handler: async (ctx) => requestMode(nextMode(pendingMode ?? activeMode), ctx),
+		handler: async (_args, ctx) => requestMode(nextMode(pendingMode ?? activeMode), ctx),
 	});
+
+	for (const shortcut of settings.shortcuts) {
+		pi.registerShortcut(shortcut, {
+			description: "Cycle agent mode",
+			handler: async (ctx) => requestMode(nextMode(pendingMode ?? activeMode), ctx),
+		});
+	}
 
 	pi.on("session_start", async (_event, ctx) => {
 		applyMode(restoreMode(ctx), ctx, false, false);
