@@ -8,5 +8,8 @@
     "shortcuts": [
       "shift+tab"
     ]
-  }
+  },
+  "enabledModels": [
+    "openai-codex/gpt-5.4"
+  ]
 }
