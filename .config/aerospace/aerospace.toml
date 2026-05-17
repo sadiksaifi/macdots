@@ -216,6 +216,9 @@ run= [
 [[on-window-detected]]
 if.app-id = 'org.alacritty'
 run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'com.muxy.app'
+run = "move-node-to-workspace 2"
 
 # Workspace 3 - Code Editors/IDEs
 [[on-window-detected]]
@@ -238,6 +241,9 @@ if.app-id = 'com.google.antigravity'
 run = "move-node-to-workspace 3"
 [[on-window-detected]]
 if.app-id = 'com.anthropic.claudefordesktop'
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'
 run = "move-node-to-workspace 3"
 
 # Workspace 4 - Others

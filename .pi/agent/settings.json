@@ -1,15 +1,17 @@
 {
-  "lastChangelogVersion": "0.66.1",
+  "lastChangelogVersion": "0.74.1",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
-  "hideThinkingBlock": false,
-  "agentModes": {
-    "shortcuts": [
-      "shift+tab"
-    ]
-  },
-  "enabledModels": [
-    "openai-codex/gpt-5.4"
-  ]
+  "hideThinkingBlock": true,
+  "packages": [
+    "npm:@tintinweb/pi-subagents",
+    "npm:pi-mcp-adapter",
+    "npm:pi-web-access",
+    "~/Projects/pi-statusline",
+    "~/Projects/pi-permissions"
+  ],
+  "theme": "dark",
+  "transport": "auto",
+  "followUpMode": "one-at-a-time"
 }

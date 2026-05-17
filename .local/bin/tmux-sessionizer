@@ -1,14 +1,24 @@
 #!/usr/bin/env bash
 
-dirs="$HOME/Projects/ $HOME/Repos/ $HOME/.config/ $HOME/.local/"
-
+search_roots=("$HOME/Projects" "$HOME/Repos" "$HOME/.config" "$HOME/.local")
+optional_directories=("$HOME/.agents" "$HOME/.pi")
 
 clear
 # Select directory using argument or fzf if no argument provided
 if [ -n "$1" ] && [ "$1" = "--active" ]; then
 	selected=$(tmux ls | awk -F ':' '{ print $1 }' | fzf )
-else 
-	selected=$(find $dirs -mindepth 1 -maxdepth 2 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \) | fzf)
+else
+	selected=$(
+		{
+			for directory in "${optional_directories[@]}"; do
+				if [ -d "$directory" ]; then
+					printf '%s\n' "$directory"
+					find "$directory" -mindepth 1 -maxdepth 2 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \)
+				fi
+			done
+			find "${search_roots[@]}" -mindepth 1 -maxdepth 2 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \)
+		} | fzf
+	)
 fi
 
 # Exit if no directory is selected

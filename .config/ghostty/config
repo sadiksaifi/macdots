@@ -22,8 +22,10 @@ background=#141415
 # background = #000000
 # background = #242424
 
-# other
+# Clipboard
 copy-on-select = clipboard
+clipboard-write = allow
+clipboard-read = allow
 
 # Keybinds
 keybind = alt+backspace=text:\x1b\x7f

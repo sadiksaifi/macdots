@@ -54,26 +54,17 @@ alias ll='eza -lah --color=auto --group-directories-first --icons'
 alias mkdir='mkdir -pv'
 alias grep='grep --color=auto'
 alias dots='/usr/bin/git --git-dir=$HOME/.macdots.git --work-tree=$HOME'
-alias dots-sync-nvim='dots submodule update --remote .config/nvim && dots add .config/nvim && dots commit -m "chore: update nvim submodule"'
+alias dots-sync-nvim='dots submodule update --remote .config/nvim && dots add -f .config/nvim && dots commit -m "chore: update nvim submodule"'
 alias gitlog='git log --all --decorate --graph'
 alias rmn='find . -type d -name "node_modules" -prune -exec \rm -rf {} +'
 alias confetti='open raycast://extensions/raycast/raycast/confetti'
-alias ccd='claude --model "opus[1m]" --effort high --dangerously-skip-permissions'
-alias ccda='claude --model "opus[1m]" --effort high --dangerously-skip-permissions --agent ask'
-alias cx='codex -m gpt-5.4 -c model_reasoning_effort="high" --dangerously-bypass-approvals-and-sandbox'
+alias ccd='claude --model "sonnet" --effort high --dangerously-skip-permissions'
+alias ccda='claude --model "sonnet" --effort high --dangerously-skip-permissions --agent ask'
+alias cx='codex -m gpt-5.5 -c model_reasoning_effort="high" --dangerously-bypass-approvals-and-sandbox'
 alias gc='gemini --model gemini-3.1-pro-preview --yolo'
 alias oc='opencode'
-
-_dots() {
-  if (( CURRENT == 2 )); then
-    local -a subcmds=(add commit push pull status diff log checkout branch
-      stash submodule restore reset remote fetch merge rebase config rm mv)
-    _describe 'command' subcmds
-  else
-    _files
-  fi
-}
-compdef _dots dots
+alias pi='PI_PERMISSIONS_AUDIT=1 mise x node@24 -- pi'
+alias lg='lazygit'
 
 function y() {
 	local tmp cwd
@@ -84,6 +75,13 @@ function y() {
 	fi
 	\rm -f -- "$tmp"
 }
+
+lninfo() {
+  local path="${1:-.}"
+  echo "${path:a} -> ${path:A}"
+}
+
+eval "$(trench shell-init zsh)"
 
 # prompt
 eval "$(starship init zsh)"
