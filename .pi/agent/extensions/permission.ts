@@ -5,6 +5,9 @@ type PermissionDecision = "allow" | "ask" | "blocked";
 
 const STATUS_KEY = "permission-state";
 const FULL_ACCESS_LABEL = "Full Access (Unrestricted)";
+const ALLOW_ONCE_LABEL = "Allow once";
+const ALLOW_IN_SESSION_LABEL = "Allow for this session";
+const DENY_LABEL = "No";
 
 // Edit these arrays directly when you want different behavior.
 const ALLOWED_TOOLS_IN_DEFAULT = [
@@ -51,16 +54,17 @@ const READONLY_BASH_COMMANDS: RegExp[] = [
 ];
 
 export default function permissionExtension(pi: ExtensionAPI) {
-  let mode: PermissionMode = "default";
+  let mode: PermissionMode = "full-access";
   let loadedCliFlag = false;
   let lastCtx: ExtensionContext | undefined;
   let plannedToolBatch = new Map<string, { index: number; total: number }>();
   let promptChain = Promise.resolve();
+  const allowedForSession = new Set<string>();
 
   pi.registerFlag("permission", {
     description: "Set permission mode: default or full-access",
     type: "string",
-    default: "default",
+    default: "full-access",
   });
 
   pi.registerShortcut("alt+p", {
@@ -88,8 +92,9 @@ export default function permissionExtension(pi: ExtensionAPI) {
     loadCliFlagOnce();
     lastCtx = ctx;
 
+    const sessionPermissionKey = getSessionPermissionKey(event);
     const decision = decide(event);
-    if (decision === "allow") return undefined;
+    if (decision === "allow" || allowedForSession.has(sessionPermissionKey)) return undefined;
 
     if (!ctx.hasUI) {
       return {
@@ -102,8 +107,12 @@ export default function permissionExtension(pi: ExtensionAPI) {
     }
 
     const prompt = buildPrompt(event, decision, plannedToolBatch.get(event.toolCallId));
-    const allowed = await enqueuePrompt(() => askPermission(ctx, prompt));
-    if (allowed) return undefined;
+    const choice = await enqueuePrompt(() => askPermission(ctx, prompt));
+    if (choice === "allow-once") return undefined;
+    if (choice === "allow-session") {
+      allowedForSession.add(sessionPermissionKey);
+      return undefined;
+    }
 
     return {
       block: true,
@@ -118,12 +127,12 @@ export default function permissionExtension(pi: ExtensionAPI) {
     if (loadedCliFlag) return;
     loadedCliFlag = true;
     const value = pi.getFlag("permission");
-    if (value === undefined || value === "default") {
-      mode = "default";
+    if (value === undefined || value === "full-access") {
+      mode = "full-access";
       return;
     }
-    if (value === "full-access") {
-      mode = "full-access";
+    if (value === "default") {
+      mode = "default";
       return;
     }
     throw new Error(`Invalid --permission value: ${String(value)}. Expected default or full-access.`);
@@ -170,9 +179,17 @@ export default function permissionExtension(pi: ExtensionAPI) {
   }
 }
 
-async function askPermission(ctx: ExtensionContext, prompt: string): Promise<boolean> {
-  const choice = await ctx.ui.select(prompt, ["Yes", "No"]);
-  return choice === "Yes";
+type PermissionPromptChoice = "allow-once" | "allow-session" | "deny";
+
+async function askPermission(ctx: ExtensionContext, prompt: string): Promise<PermissionPromptChoice> {
+  const choice = await ctx.ui.select(prompt, [
+    ALLOW_ONCE_LABEL,
+    ALLOW_IN_SESSION_LABEL,
+    DENY_LABEL,
+  ]);
+  if (choice === ALLOW_ONCE_LABEL) return "allow-once";
+  if (choice === ALLOW_IN_SESSION_LABEL) return "allow-session";
+  return "deny";
 }
 
 function buildPrompt(
@@ -190,8 +207,13 @@ function buildPrompt(
 }
 
 function describeToolCall(event: ToolCallEvent): string {
-  if (event.toolName === "bash") return "run this bash command";
-  return `run ${event.toolName}`;
+  if (event.toolName === "bash") {
+    const command = getBashCommand(event);
+    return command === "" ? "run this bash command" : `run this bash command:\n${command}`;
+  }
+
+  const path = getPathFromInput(event.input);
+  return path === "" ? `run ${event.toolName}` : `run ${event.toolName} on ${path}`;
 }
 
 function getBashCommand(event: ToolCallEvent): string {
@@ -201,6 +223,26 @@ function getBashCommand(event: ToolCallEvent): string {
 function getBashCommandFromInput(input: unknown): string {
   const record = input as { command?: unknown };
   return typeof record.command === "string" ? record.command : "";
+}
+
+function getPathFromInput(input: unknown): string {
+  const record = input as { path?: unknown };
+  return typeof record.path === "string" ? record.path : "";
+}
+
+function getSessionPermissionKey(event: ToolCallEvent): string {
+  return `${event.toolName}:${stableStringify(event.input)}`;
+}
+
+function stableStringify(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+  if (typeof value !== "object" || value === null) return JSON.stringify(value) ?? "null";
+
+  const record = value as Record<string, unknown>;
+  return `{${Object.keys(record)
+    .sort()
+    .map((key) => `${JSON.stringify(key)}:${stableStringify(record[key])}`)
+    .join(",")}}`;
 }
 
 function matchesAny(patterns: readonly RegExp[], value: string): boolean {
