@@ -23,9 +23,11 @@ export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/.bun/bin:$PATH"
 
 # Android / Java
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
+if command -v mise >/dev/null 2>&1 && JAVA_HOME="$(mise where java@zulu-17 2>/dev/null)"; then
+  export JAVA_HOME
+fi
 export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
+export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
 
 # Rust toolchain
 . "$HOME/.cargo/env"
@@ -38,3 +40,5 @@ export PATH="/Users/sdk/.lmstudio/bin:$PATH"
 
 # Postgres cli
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/zig@0.15/bin:$PATH"

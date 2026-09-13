@@ -219,6 +219,9 @@ run = "move-node-to-workspace 2"
 [[on-window-detected]]
 if.app-id = 'com.muxy.app'
 run = "move-node-to-workspace 2"
+[[on-window-detected]]
+if.app-id = 'io.github.sadiksaifi.spaceterm'
+run = "move-node-to-workspace 2"
 
 # Workspace 3 - Code Editors/IDEs
 [[on-window-detected]]
@@ -245,11 +248,14 @@ run = "move-node-to-workspace 3"
 [[on-window-detected]]
 if.app-id = 'com.openai.codex'
 run = "move-node-to-workspace 3"
-
-# Workspace 4 - Others
 [[on-window-detected]]
 if.app-id = 'com.github.Electron'
-run = "move-node-to-workspace 4"
+run = "move-node-to-workspace 3"
+[[on-window-detected]]
+if.app-id = 'com.t3tools.t3code'
+run = "move-node-to-workspace 3"
+
+# Workspace 4 - Others
 [[on-window-detected]]
 if.app-id = 'com.postmanlabs.mac'
 run = "move-node-to-workspace 4"
@@ -291,6 +297,9 @@ run = "move-node-to-workspace 5"
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'
 run = "move-node-to-workspace 5"
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = "move-node-to-workspace 5"
 
 # Workspace 0 - Other
 [[on-window-detected]]
@@ -307,9 +316,10 @@ run = "move-node-to-workspace 0"
 [[on-window-detected]]
 if.app-id = "com.apple.iphonesimulator"
 run = [
-	"layout tiling",
+	"layout floating",
 	"resize width 1138",
-	"focus-back-and-forth"
+	"focus-back-and-forth",
+  "move-node-to-workspace 3"
 ]
 
 ## Custom floating Rules
@@ -318,6 +328,12 @@ run = [
 if.app-id="com.mitchellh.ghostty"
 run= [
   "layout floating",
+]
+
+[[on-window-detected]]
+if.app-id = "com.TablePro"
+run = [
+	"layout floating",
 ]
 
 [[on-window-detected]]
@@ -342,4 +358,8 @@ run = "layout floating"
 
 [[on-window-detected]]
 if.app-id = "com.apple.Passwords"
+run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = "com.apple.ScreenSharing"
 run = "layout floating"

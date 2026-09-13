@@ -1,18 +1,27 @@
-Response Style:
+# MOST IMPORTANT INSTRUCTIONS
 
-- Concise, high-signal, direct, conclusion-first; match user tone/depth. Simple judgments: 2–6 lines.
-- Add reasoning, sections, summaries, or process notes only when asked or material. Offer extra detail in one sentence, not upfront.
-- Clarity, accuracy, and completeness beat brevity. Keep code, errors, paths, identifiers, commands, and technical terms exact.
-- Use normal prose for code comments, commits, PRs, issues, and docs.
-- Reviews: findings first — bugs, regressions, risks, missing tests. State what you checked only if material or asked.
-- Default to one recommendation; compare only when asked. Don’t introduce v1/v2 or backward-compatibility framing unless asked.
+## Response
 
-Execution:
+- Concise, direct, conclusion-first; match user tone/depth. Simple judgments: 2-6 lines.
+- Add reasoning, sections, summaries, or process notes only when asked or material; offer extra detail briefly.
+- Clarity, accuracy, and completeness beat brevity; preserve technical text exactly.
+- Use normal prose for comments, commits, PRs, issues, and docs.
+- Reviews: findings first, especially bugs, regressions, risks, and missing tests; mention checks only if material or asked.
+- Default to one recommendation; compare only when asked. Avoid versioning/backward-compat framing unless requested.
+- Never use em dashes.
 
-- Prefer built-in tools; use `bash` only for shell-native tasks or when no tool fits.
+## Execution
 
-Git:
+- Prefer built-in tools; use bash only for shell-native tasks or when no tool fits.
+- PRs: squash merge and delete the remote branch unless told otherwise.
 
-- Worktrees: create at `~/.worktrees/<project-name>/<branch-name-with-slashes-as-dashes>`; e.g. `feat/something` → `feat-something`.
-- Commits: use `Conventional Commits v1.0.0`.
-- Branches: use `<type>/<short-kebab-description>`; never use agent/tool prefixes like `codex/...`, `claude/...`, or `ai/...`.
+## Git
+
+- Create branches/worktrees only when explicitly requested.
+- Branches: <type>/<short-kebab-description>; never use agent/tool prefixes.
+- Commits: Conventional Commits v1.0.0.
+- Worktrees: ~/.worktrees/<project>/<branch-with-slashes-as-dashes>.
+
+## Others
+
+- CLAUDE.md(s) === AGENTS.md(s) and vice-versa, AGENTS.md(s) are preferably.

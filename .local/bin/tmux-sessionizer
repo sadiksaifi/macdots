@@ -3,20 +3,51 @@
 search_roots=("$HOME/Projects" "$HOME/Repos" "$HOME/.config" "$HOME/.local")
 optional_directories=("$HOME/.agents" "$HOME/.pi")
 
-clear
+fresh_viewport() {
+	[ -t 1 ] || return
+
+	local rows
+	rows="${LINES:-$(tput lines 2>/dev/null)}"
+
+	[[ "$rows" =~ ^[0-9]+$ ]] || return
+
+	# Push the current viewport into scrollback without leaving
+	# a full screen of blank lines behind.
+	printf '\e[%d;1H\n\e[H' "$rows"
+}
+
+fresh_viewport
+
 # Select directory using argument or fzf if no argument provided
 if [ -n "$1" ] && [ "$1" = "--active" ]; then
-	selected=$(tmux ls | awk -F ':' '{ print $1 }' | fzf )
+	selected=$(tmux ls | awk -F ':' '{ print $1 }' | fzf)
 else
 	selected=$(
 		{
 			for directory in "${optional_directories[@]}"; do
 				if [ -d "$directory" ]; then
 					printf '%s\n' "$directory"
-					find "$directory" -mindepth 1 -maxdepth 2 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \)
+					find "$directory" \
+						-mindepth 1 \
+						-maxdepth 2 \
+						-type d \
+						-not \( \
+							-path '*/.git' \
+							-o -path '*/node_modules' \
+							-o -path '*/.yarn' \
+						\)
 				fi
 			done
-			find "${search_roots[@]}" -mindepth 1 -maxdepth 2 -type d -not \( -path '*/.git' -o -path '*/node_modules' -o -path '*/.yarn' \)
+
+			find "${search_roots[@]}" \
+				-mindepth 1 \
+				-maxdepth 2 \
+				-type d \
+				-not \( \
+					-path '*/.git' \
+					-o -path '*/node_modules' \
+					-o -path '*/.yarn' \
+				\)
 		} | fzf
 	)
 fi
@@ -30,20 +61,20 @@ selected_name="$(basename "$selected" | tr . _)"
 # Check if tmux is running
 tmux_running="$(pgrep tmux)"
 
-# If no TMUX session is running, start a new session and attach
+# If no tmux session is running, start a new session and attach
 if [ -z "$TMUX" ] && [ -z "$tmux_running" ]; then
-    tmux new-session -s "$selected_name" -c "$selected"
-    exit 0
+	tmux new-session -s "$selected_name" -c "$selected"
+	exit 0
 fi
 
 # If the session doesn't exist, create a new session
-if ! tmux has-session -t "$selected_name" 2> /dev/null; then
-    tmux new-session -ds "$selected_name" -c "$selected"
+if ! tmux has-session -t "$selected_name" 2>/dev/null; then
+	tmux new-session -ds "$selected_name" -c "$selected"
 fi
 
 # Attach to the session or switch clients if already in tmux
 if [ -z "$TMUX" ]; then
-    tmux attach-session -t "$selected_name"
+	tmux attach-session -t "$selected_name"
 else
-    tmux switch-client -t "$selected_name"
+	tmux switch-client -t "$selected_name"
 fi
